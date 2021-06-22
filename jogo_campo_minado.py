@@ -63,10 +63,39 @@ def calcular_vizinhanca(matriz):
 
     return matriz
 
+def abrir_matriz(matriz, i, j):
+    dimensao = len(matriz)
+
+    if matriz[i][j] == "_":
+        matriz[i][j] = " "
+
+        linha_inicial = i - 1
+        if linha_inicial < 0:
+            linha_inicial = 0
+        linha_final = i + 1
+        if linha_final > dimensao - 1:
+            linha_final = dimensao - 1
+        coluna_inicial = j - 1
+        if coluna_inicial < 0:
+            coluna_inicial = 0
+        coluna_final = j + 1
+        if coluna_final > dimensao - 1:
+            coluna_final = dimensao - 1
+
+        for l in range(linha_inicial, linha_final + 1):
+            for c in range(coluna_inicial, coluna_final + 1):
+                abrir_matriz(matriz, l, c)
+
 
 dimensao = 10
 
 matriz = criar_matriz(dimensao)
 matriz = sortear_minas(matriz)
 matriz = calcular_vizinhanca(matriz)
+exibir_matriz(matriz)
+linha = int(input("Digite a linha: "))
+coluna = input("Digite a coluna: ")
+coluna = coluna.upper()
+coluna = ord(coluna) - 65
+abrir_matriz(matriz, linha, coluna)
 exibir_matriz(matriz)
